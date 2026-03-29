@@ -3,35 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard IKP</title>
+    <title>Inventory Management Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Menghilangkan margin dan padding default browser */
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            width: 100%;
-            overflow: hidden; /* Mencegah scrollbar di level body */
+        /* Menggunakan palet pastel sesuai referensi */
+        :root {
+            --navy-pastel: #2d4356;
+            --bg-soft: #f0f4f8;
+            --maroon-pastel: #a75d5d;
         }
-
-        /* Mengatur iframe agar memenuhi layar */
-        iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
+        body { background-color: var(--bg-soft); }
+        .sidebar { background-color: var(--navy-pastel); }
     </style>
 </head>
-<body>
+<body class="flex h-screen overflow-hidden">
 
-    <iframe 
-        src="https://script.google.com/macros/s/AKfycbzWMy-7vkxgNmoMt0jvZD4WhE77sXogUijbt18EGOWgimR0rRgtVXZk6Do_XLA4XgTa/exec" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-        allowfullscreen>
-    </iframe>
+    <aside class="sidebar w-64 flex flex-col text-white transition-all duration-300">
+        <div class="p-6 flex flex-col items-center border-b border-gray-600">
+            <div class="w-16 h-16 rounded-full bg-gray-300 mb-2 overflow-hidden border-2 border-white">
+                <img src="https://via.placeholder.com/150" alt="Profile">
+            </div>
+            <h2 class="text-sm font-semibold">Didik Handoko</h2>
+            <p class="text-xs text-gray-400">Policy Analyst</p>
+        </div>
 
+        <nav class="flex-1 px-4 py-6 space-y-2">
+            <a href="#" onclick="showSection('dashboard')" class="flex items-center p-3 rounded-lg bg-white/10 hover:bg-white/20 transition">
+                <i class="fas fa-th-large w-6"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="#" onclick="showSection('inventory', 'https://example.com/inventory')" class="flex items-center p-3 rounded-lg hover:bg-white/10 transition">
+                <i class="fas fa-boxes w-6"></i>
+                <span>Inventory</span>
+            </a>
+            <a href="#" onclick="showSection('orders', 'https://example.com/orders')" class="flex items-center p-3 rounded-lg hover:bg-white/10 transition">
+                <i class="fas fa-shopping-cart w-6"></i>
+                <span>Orders</span>
+            </a>
+            <a href="#" onclick="showSection('reporting', 'https://example.com/reports')" class="flex items-center p-3 rounded-lg hover:bg-white/10 transition">
+                <i class="fas fa-chart-line w-6"></i>
+                <span>Reporting</span>
+            </a>
+        </nav>
+
+        <div class="p-4 border-t border-gray-600">
+            <a href="#" class="flex items-center p-3 text-red-300 hover:text-white transition">
+                <i class="fas fa-sign-out-alt w-6"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col overflow-hidden">
+        
+        <header class="bg-white shadow-sm p-4 flex justify-between items-center px-8">
+            <h1 id="page-title" class="text-xl font-bold text-gray-700">Welcome back!</h1>
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <input type="text" placeholder="Search..." class="bg-gray-100 border-none rounded-full py-2 px-4 pl-10 focus:ring-2 focus:ring-blue-300">
+                    <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                </div>
+                <i class="fas fa-bell text-gray-500 cursor-pointer"></i>
+            </div>
+        </header>
+
+        <section id="content-area" class="flex-1 overflow-y-auto p-8">
+            
+            <div id="dashboard-view">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-blue-400">
+                        <p class="text-gray-500 text-sm">Total Products</p>
+                        <h3 class="text-2xl font-bold">5,483</h3>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-green-400">
+                        <p class="text-gray-500 text-sm">Orders</p>
+                        <h3 class="text-2xl font-bold">2,859</h3>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-teal-400">
+                        <p class="text-gray-500 text-sm">Total Stock</p>
+                        <h3 class="text-2xl font-bold">5,483</h3>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-orange-400">
+                        <p class="text-gray-500 text-sm text-orange-600">Out of Stock</p>
+                        <h3 class="text-2xl font-bold">38</h3>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-xl shadow-sm min-h-[300px] flex items-center justify-center border-dashed border-2 border-gray-200">
+                        <p class="text-gray-400">Inventory Value Chart Area</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm min-h-[300px] flex items-center justify-center border-dashed border-2 border-gray-200">
+                        <p class="text-gray-400">Expense vs Profit Chart Area</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="embed-view" class="hidden h-full w-full">
+                <iframe id="app-frame" src="" class="w-full h-full border-none rounded-xl shadow-inner"></iframe>
+            </div>
+
+        </section>
+    </main>
+
+    <script>
+        function showSection(section, url = '') {
+            const dashboardView = document.getElementById('dashboard-view');
+            const embedView = document.getElementById('embed-view');
+            const appFrame = document.getElementById('app-frame');
+            const title = document.getElementById('page-title');
+
+            if (section === 'dashboard') {
+                dashboardView.classList.remove('hidden');
+                embedView.classList.add('hidden');
+                title.innerText = "Dashboard Overview";
+            } else {
+                dashboardView.classList.add('hidden');
+                embedView.classList.remove('hidden');
+                appFrame.src = url; // Masukkan URL aplikasi/portal di sini
+                title.innerText = section.charAt(0).toUpperCase() + section.slice(1);
+            }
+        }
+    </script>
 </body>
 </html>
